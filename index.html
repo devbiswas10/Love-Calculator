@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .calculator, .result-page {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ff69b4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff85c1;
+        }
+        .heart-animation {
+            display: none;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff69b4;
+            transform: rotate(45deg);
+            top: 25px;
+            left: 25px;
+        }
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -25px;
+            left: 0;
+        }
+        .heart:after {
+            top: 0;
+            left: -25px;
+        }
+        .break {
+            animation: break-heart 1s forwards;
+        }
+        @keyframes break-heart {
+            0% {
+                transform: rotate(45deg);
+            }
+            50% {
+                transform: rotate(45deg) translateY(-10px);
+            }
+            100% {
+                transform: rotate(45deg) translateY(100px);
+                opacity: 0;
+            }
+        }
+        .result-page {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="calculator" id="calculator">
+            <h1>Love Calculator</h1>
+            <input type="text" id="name1" placeholder="Enter First Name">
+            <input type="text" id="name2" placeholder="Enter Second Name">
+            <button onclick="calculateLove()">Calculate Love</button>
+            <div class="heart-animation">
+                <div class="heart" id="heart"></div>
+            </div>
+        </div>
+
+        <div class="result-page" id="result-page">
+            <h1>Love Result</h1>
+            <p id="result"></p>
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+
+            if (!name1 || !name2) {
+                alert('Please enter both names!');
+                return;
+            }
+
+            const lovePercentage = Math.floor(Math.random() * 101); // Random number between 0 and 100
+            const heart = document.getElementById('heart');
+            const animationDiv = document.querySelector('.heart-animation');
+
+            animationDiv.style.display = 'block';
+            heart.classList.add('break');
+
+            setTimeout(() => {
+                animationDiv.style.display = 'none';
+                heart.classList.remove('break');
+
+                document.getElementById('calculator').style.display = 'none';
+                document.getElementById('result-page').style.display = 'block';
+
+                document.getElementById('result').innerText = `${name1} ❤️ ${name2} = ${lovePercentage}% Love!`;
+            }, 1000); // Match the animation duration
+        }
+
+        function goBack() {
+            document.getElementById('result-page').style.display = 'none';
+            document.getElementById('calculator').style.display = 'block';
+            document.getElementById('name1').value = '';
+            document.getElementById('name2').value = '';
+        }
+    </script>
+</body>
+</html>
